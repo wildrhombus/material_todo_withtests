@@ -1,0 +1,12 @@
+<mat-input-container class="full-width">
+    <input matInput [placeholder]="placeholder"
+      [(ngModel)]="value"
+      (keyup.enter)="emitValue(value)"
+      (keyup.escape)="emitValue(null)" />
+</mat-input-container>
+<button mat-button (click)="emitValue(null)" color="primary" class="tst__cancel_button">
+  {{cancelText}}
+</button>
+<button mat-raised-button (click)="emitValue(value)" color="primary" class="tst__ok_button">
+  {{ okText }}
+</button>
