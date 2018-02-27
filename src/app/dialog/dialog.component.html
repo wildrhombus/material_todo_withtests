@@ -1,12 +1,20 @@
-<mat-input-container class="full-width">
-    <input matInput [placeholder]="placeholder"
-      [(ngModel)]="value"
-      (keyup.enter)="emitValue(value)"
-      (keyup.escape)="emitValue(null)" />
-</mat-input-container>
-<button mat-button (click)="emitValue(null)" color="primary" class="tst__cancel_button">
-  {{cancelText}}
-</button>
-<button mat-raised-button (click)="emitValue(value)" color="primary" class="tst__ok_button">
-  {{ okText }}
-</button>
+<div class="overlay" *ngIf="showPrompt">
+  <mat-card class="modalDialog">
+    <mat-toolbar color="primary">
+      {{title}}
+    </mat-toolbar>
+    <mat-card-content>
+      <br>{{template}}<br><br>
+      <mat-input-container class="full-width">
+        <input matInput [placeholder]="placeholder"
+               [(ngModel)]="value"
+               (keyup.enter)="emitValue(value)"
+               (keyup.escape)="emitValue(null)" class="tst__value"/>
+      </mat-input-container>
+    </mat-card-content>
+    <mat-card-actions class="center">
+      <button mat-button (click)="emitValue(null)" color="primary" class="tst__cancel_button">{{cancelText}}</button>
+      <button mat-raised-button (click)="emitValue(value)" color="primary" class="tst__ok_button">{{okText}}</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
