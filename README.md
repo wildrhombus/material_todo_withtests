@@ -1,3 +1,15 @@
+This was written by following this tutorial https://medium.com/@danielzen/build-a-todo-app-with-angular-material-and-the-angular-cli-d6340cb9ed31
+
+from this code:
+
+https://github.com/danielzen/material-todo/tree/dialog
+
+However the tutorial and code are out of date and don't work with the lastest angular-material, so I updated it.
+
+My goal in working with the tutorial was to improve my angular test writing skills, so I have also added tests.
+
+
+
 # MaterialApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.8.
