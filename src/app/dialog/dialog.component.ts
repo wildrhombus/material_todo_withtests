@@ -20,6 +20,7 @@ export class DialogComponent implements OnInit {
     this.okText = 'OK';
     this.cancelText = 'Cancel';
     this.value = null;
+    this.showPrompt = false;
    }
 
   ngOnInit() {

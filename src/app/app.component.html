@@ -1,10 +1,43 @@
-<app-dialog [title]="'Dialog Prompt'"
-            [template]="'This is our new Material Design based Component:'"
-            [placeholder]="'Enter text here'"
-            [okText]="'Yes'"
-            [cancelText]="'No'"
-            [value]="'Starting Text'"
-            (valueEmitted)="log($event)"
-            [showPrompt]="true">
+<mat-card class="todoapp">
+  <mat-toolbar color="primary">
+    material-todo
+    <button mat-fab class="fab-add tst__add" (click)="todoDialog()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-card-content *ngIf="todoList.length">
+    <mat-list>
+      <form>
+        <mat-list-item *ngFor="let todo of todoList; let index=index" class="list-item">
+
+          <mat-checkbox color="primary" type="checkbox" [name]="'item'+index" [(ngModel)]="todo.completed">
+            <span [class.completed]="todo.completed">{{todo.title}}</span>
+          </mat-checkbox>
+
+          <span>
+           <button mat-mini-fab (click)="remove(index)" color="primary">
+             <mat-icon>delete_forever</mat-icon>
+           </button>
+
+           <button mat-mini-fab (click)="todoDialog(todo)" color="primary"
+                   [disabled]="todo.completed">
+             <mat-icon>mode_edit</mat-icon>
+           </button>
+         </span>
+
+        </mat-list-item>
+      </form>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
+
+<app-dialog [title]="'New Task'"
+            [template]="'Enter Task:'"
+            [placeholder]="'What do you need to do?'"
+            [okText]="okButtonText"
+            [value]="fieldValue"
+            (valueEmitted)="updateTodo($event)"
+            [showPrompt]="showDialog">
 </app-dialog>
 
