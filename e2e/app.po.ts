@@ -5,39 +5,63 @@ export class AppPage {
     return browser.get('/');
   }
 
-  getTodos() {
+  todo() {
     return element(by.css('.mat-list-item'));
   }
 
-  getToolbarText() {
+  todosCount() {
+    return element.all(by.css('.mat-list-item')).count()
+  }
+
+  firstTodo() {
+    return element.all(by.css('.mat-list-item')).first().getText();
+  }
+
+  toolbarText() {
     return element(by.css('.mat-toolbar')).getText();
   }
 
-  getToolbarAdd() {
+  toolbarAdd() {
     return element(by.css('.tst__add mat-icon')).getText();
   }
 
-  getAddButton() {
+  addButton() {
     return element(by.css('.tst__add'));
   }
 
-  getEditButton() {
+  editButton() {
     return element(by.css('.tst__edit'));
   }
 
-  getDeleteButton() {
+  deleteButton() {
     return element(by.css('.tst__delete'));
   }
 
-  getDialogSaveButton() {
+  appDialog() {
+    return element(by.css('app-dialog'));
+  }
+
+  dialogTitle() {
+    return element(by.css('app-dialog .mat-card .mat-toolbar')).getText();
+  }
+
+  dialogSaveButton() {
     return element(by.css('.tst__ok'));
   }
 
-  getDialogCancelButton() {
+  dialogCancelButton() {
     return element(by.css('.tst__cancel'));
   }
 
-  getValueElement() {
+  valueElement() {
     return element(by.css('.tst__value'));
+  }
+
+  inputValue() {
+    return this.valueElement().getAttribute('value');
+  }
+
+  inputPlaceholder() {
+    return this.valueElement().getAttribute('placeholder');
   }
 }

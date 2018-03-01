@@ -18,152 +18,95 @@ describe('material-app App', () => {
   });
 
   it('should display a heading', () => {
-    expect(page.getToolbarText()).toContain('material-todo');
+    expect(page.toolbarText()).toContain('material-todo');
   });
 
   it('should have 0 todos', () => {
-    expect(element.all(by.css('.mat-list-item')).count()).toEqual(0);
+    expect(page.todosCount()).toEqual(0);
   });
 
   it('should have an add button', () => {
-    expect(page.getToolbarAdd()).toContain('add');
+    expect(page.toolbarAdd()).toContain('add');
   });
 
-  it('should open dialog for add', () => {
-    page.getAddButton().click();
-    expect(element(by.css('app-dialog'))).toBeDefined();
-    expect(element(by.css('app-dialog .mat-card .mat-toolbar')).getText()).toContain('New Task');
-    expect(element(by.css('app-dialog .mat-card-content')).getText()).toContain('Enter Task');
-    expect(page.getValueElement().getAttribute('value')).toEqual('');
-    expect(page.getValueElement().getAttribute('placeholder')).toContain('What do you need to do?');
-    expect(page.getDialogSaveButton().getText()).toContain('Create');
-   });
-
-  it('should add todo with save', () => {
-    page.getAddButton().click();
-    expect(page.getValueElement().getAttribute('value')).toEqual('');
-    expect(page.getDialogSaveButton()).toBeDefined();
-    expect(element(by.css('app-dialog .mat-card'))).toBeDefined();
-
-    page.getValueElement().sendKeys('First Todo');
-    page.getDialogSaveButton().click();
-
-    expect(element.all(by.css('app-dialog .mat-card')).count()).toEqual(0);
-
-    expect(element.all(by.css('.mat-list-item')).count()).toEqual(1);
-
-    let firstTitle = element.all(by.css('.mat-list-item')).first().all(by.css('.mat-checkbox-label')).first();
-    expect(firstTitle.getText()).toContain('First Todo');
-  });
-
-  it('should cancel dialog', () => {
-    page.getAddButton().click();
-    expect(page.getValueElement().getAttribute('value')).toEqual('');
-    expect(page.getDialogCancelButton()).toBeDefined();
-    expect(element(by.css('app-dialog .mat-card'))).toBeDefined();
-
-    page.getValueElement().sendKeys('First Todo');
-    page.getDialogCancelButton().click();
-
-    expect(element.all(by.css('app-dialog .mat-card')).count()).toEqual(0);
-
-    expect(element.all(by.css('.mat-list-item')).count()).toEqual(0);
-  });
-
-  it('should open dialog for edit', () => {
-    page.getAddButton().click();
-
-    var saveButton = page.getDialogSaveButton();
-    var inputValue = page.getValueElement();
-
-    expect(inputValue.isDisplayed()).toBe(true);
-    expect(saveButton.isDisplayed()).toBe(true);
-
-    inputValue.sendKeys('First Todo');
-    saveButton.click();
-
-    expect(element.all(by.css('.mat-list-item')).count()).toEqual(1);
-
-    let firstTodo = element.all(by.css('.mat-list-item')).first().all(by.css('.mat-checkbox-label')).first();
-    expect(firstTodo.getText()).toContain('First Todo');
-
-    browser.actions().mouseMove(element(by.css('.mat-list-item'))).perform().then(() => {
-      let editButton = element(by.css('.tst__edit'));
-      expect(editButton.isDisplayed()).toBe(true);
-
-      editButton.click().then(() => {
-        expect(element(by.css('app-dialog'))).toBeDefined();
-        expect(element(by.css('app-dialog .mat-card .mat-toolbar')).getText()).toContain('Edit Task');
-        expect(saveButton).toBeDefined();
-        expect(saveButton.getText()).toContain('Edit');
-
-        expect(inputValue).toBeDefined();
-        expect(inputValue.getAttribute('value')).toBe('First Todo');
-      });
+  describe('Todo Actions', () => {
+    beforeEach(() => {
+      page.addButton().click();
     });
-  });
 
-  it('should edit todo item', () => {
-    page.getAddButton().click();
-
-    var saveButton = page.getDialogSaveButton();
-    var inputValue = page.getValueElement();
-
-    expect(inputValue.isDisplayed()).toBe(true);
-    expect(saveButton.isDisplayed()).toBe(true);
-
-    inputValue.sendKeys('First Todo');
-
-    saveButton.click();
-
-    let firstTodo = element.all(by.css('.mat-list-item')).first().all(by.css('.mat-checkbox-label')).first();
-    expect(firstTodo.getText()).toContain('First Todo');
-
-    browser.actions().mouseMove(element(by.css('.mat-list-item'))).perform().then(() => {
-      let editButton = element(by.css('.tst__edit'));
-      expect(editButton.isDisplayed()).toBe(true);
-
-      editButton.click().then(() => {
-        expect(saveButton.isDisplayed()).toBe(true);
-        expect(saveButton.getText()).toContain('Edit');
-
-        expect(inputValue.isDisplayed()).toBe(true);
-        expect(inputValue.getAttribute('value')).toBe('First Todo');
-
-        inputValue.sendKeys('');
-        inputValue.sendKeys('First Todo Edited');
-
-        saveButton.click();
-
-        expect(element.all(by.css('.mat-list-item')).count()).toEqual(1);
-
-        expect(firstTodo.getText()).toContain('First Todo Edited');
-      });
+    it('should open a dialog for create', () => {
+      expect(page.appDialog().isDisplayed()).toBe(true);
+      expect(page.dialogTitle()).toContain('New Task');
+      expect(page.inputValue()).toEqual('');
+      expect(page.inputPlaceholder()).toContain('What do you need to do?');
+      expect(page.dialogSaveButton().getText()).toContain('Create');
     });
-  });
 
-  it('should remove todo item', () => {
-    page.getAddButton().click();
+    it('should add a todo', () => {
+      page.valueElement().sendKeys('First Todo');
+      page.dialogSaveButton().click();
 
-    var saveButton = page.getDialogSaveButton();
-    var inputValue = page.getValueElement();
+      expect(page.appDialog().isDisplayed()).toBe(false);
+      expect(page.todosCount()).toEqual(1);
+      expect(page.firstTodo()).toContain('First Todo');
+    });
 
-    expect(inputValue.isDisplayed()).toBe(true);
-    expect(saveButton.isDisplayed()).toBe(true);
+    it('should cancel dialog', () => {
+      expect(page.dialogCancelButton()).toBeDefined();
 
-    inputValue.sendKeys('First Todo');
+      page.valueElement().sendKeys('First Todo');
+      page.dialogCancelButton().click();
 
-    saveButton.click();
+      expect(page.appDialog().isDisplayed()).toBe(false);
+      expect(page.todosCount()).toEqual(0);
+    });
 
-    let firstTodo = element.all(by.css('.mat-list-item')).first().all(by.css('.mat-checkbox-label')).first();
-    expect(firstTodo.getText()).toContain('First Todo');
+    describe('TodoActions with existing todo', () => {
+      beforeEach(() => {
+        page.valueElement().sendKeys('First Todo');
+        page.dialogSaveButton().click();
+      });
 
-    browser.actions().mouseMove(element(by.css('.mat-list-item'))).perform().then(() => {
-      let deleteButton = element(by.css('.tst__delete'));
-      expect(deleteButton.isDisplayed()).toBe(true);
+      it('should open dialog for edit', () => {
+        browser.actions().mouseMove(page.todo()).perform().then(() => {
+          let editButton = page.editButton();
+          expect(editButton.isDisplayed()).toBe(true);
 
-      deleteButton.click().then(() => {
-        expect(element.all(by.css('.mat-list-item')).count()).toEqual(0);
+          editButton.click().then(() => {
+            expect(page.appDialog().isDisplayed()).toBe(true);
+            expect(page.dialogTitle()).toContain('Edit Task');
+            expect(page.inputValue()).toEqual('First Todo');
+            expect(page.dialogSaveButton().getText()).toContain('Edit');
+          });
+        });
+      });
+
+      it('should edit todo item', () => {
+        browser.actions().mouseMove(page.todo()).perform().then(() => {
+          page.editButton().click().then(() => {
+            let inputValue = page.valueElement();
+
+            inputValue.sendKeys('');
+            inputValue.sendKeys('First Todo Edited');
+
+            page.dialogSaveButton().click();
+
+            expect(page.appDialog().isDisplayed()).toBe(false);
+            expect(page.todosCount()).toEqual(1);
+            expect(page.firstTodo()).toContain('First Todo Edited');
+          });
+        });
+      });
+
+      it('should remove todo item', () => {
+        browser.actions().mouseMove(page.todo()).perform().then(() => {
+          let deleteButton = page.deleteButton();
+          expect(deleteButton.isDisplayed()).toBe(true);
+
+          deleteButton.click().then(() => {
+            expect(page.todosCount()).toEqual(0);
+          });
+        });
       });
     });
   });
