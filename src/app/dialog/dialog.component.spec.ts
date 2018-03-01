@@ -58,10 +58,10 @@ describe('DialogComponent', () => {
         de_value = fixture.debugElement.query(By.css('.tst__value'));
         el_value = de_value.nativeElement;
 
-        de_cancel = fixture.debugElement.query(By.css('.tst__cancel_button'));
+        de_cancel = fixture.debugElement.query(By.css('.tst__cancel'));
         el_cancel = de_cancel.nativeElement;
 
-        de_ok = fixture.debugElement.query(By.css('.tst__ok_button'));
+        de_ok = fixture.debugElement.query(By.css('.tst__ok'));
         el_ok = de_ok.nativeElement;
 
         spyOn(component, 'emitValue');

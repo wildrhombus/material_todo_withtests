@@ -39,7 +39,7 @@ describe('AppComponent', () => {
     expect(app.showDialog).toBeFalsy;
     expect(app.editingTodo).toBeNull;
     expect(app.fieldValue).toEqual('');
-    expect(app.okButtonText).toEqual('Create task');
+    expect(app.okButtonText).toEqual('Create');
   });
 
   describe('Open Create Dialog', () => {
@@ -70,7 +70,7 @@ describe('AppComponent', () => {
       expect(app.showDialog).toBeTruthy;
       expect(app.editingTodo).toBeNull;
       expect(app.fieldValue).toEqual('');
-      expect(app.okButtonText).toEqual('Create task');
+      expect(app.okButtonText).toEqual('Create');
     }));
   });
 
@@ -149,7 +149,7 @@ describe('AppComponent', () => {
         expect(app.showDialog).toBeTruthy;
         expect(app.editingTodo).toEqual(app.todoList[0]);
         expect(app.fieldValue).toEqual(app.todoList[0].title);
-        expect(app.okButtonText).toEqual('Edit task');
+        expect(app.okButtonText).toEqual('Edit');
       }));
     });
 

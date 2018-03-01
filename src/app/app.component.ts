@@ -10,17 +10,21 @@ export class AppComponent {
   editingTodo: any = null;
   fieldValue = '';
   todoList: any = [];
-  okButtonText = 'Create task';
+  okButtonText = 'Create';
+  titleText = "New"
 
   constructor() {}
 
   todoDialog(todo = null) {
-    this.okButtonText = 'Create task';
+    this.titleText = 'New Task';
+    this.okButtonText = 'Create';
     this.fieldValue = '';
     this.editingTodo = todo;
+
     if (todo) {
       this.fieldValue = todo.title;
-      this.okButtonText = 'Edit task';
+      this.titleText = 'Edit Task';
+      this.okButtonText = 'Edit';
     }
     this.showDialog = true;
   }
