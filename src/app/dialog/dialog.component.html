@@ -5,12 +5,12 @@
     </mat-toolbar>
     <mat-card-content>
       <br>{{template}}<br><br>
-      <mat-input-container class="full-width">
+      <mat-form-field class="full-width">
         <input matInput [placeholder]="placeholder"
                [(ngModel)]="value"
                (keyup.enter)="emitValue(value)"
                (keyup.escape)="emitValue(null)" class="tst__value"/>
-      </mat-input-container>
+      </mat-form-field>
     </mat-card-content>
     <mat-card-actions class="center">
       <button mat-button (click)="emitValue(null)" color="primary" class="tst__cancel">{{cancelText}}</button>
