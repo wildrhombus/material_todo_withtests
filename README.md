@@ -12,7 +12,7 @@ My goal in working with the tutorial was to improve my angular test writing skil
 
 # MaterialApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.8.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4.
 
 ## Development server
 
